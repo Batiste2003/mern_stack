@@ -1,0 +1,7 @@
+#http
+PUT http://localhost:5000/api/user/6681a1eed536796324a66afd
+Content-Type: application/json
+
+{
+   "bio" : "Je m'appelle Sandrine et je suis cadre dans la santé"
+}

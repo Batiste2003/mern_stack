@@ -7,7 +7,7 @@ router.post('/register', authController.signUp);
 
 // User db
 router.get('/', userController.getAllUsers);
-
 router.get('/:id', userController.getUserById);
+router.put('/:id', userController.updateUser);
 
 module.exports = router;
