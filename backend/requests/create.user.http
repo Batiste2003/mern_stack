@@ -3,8 +3,8 @@ POST http://localhost:5000/api/user/register
 Content-Type: application/json
 
 {
-   "pseudo" : "Sandrine",
-   "email" : "sandrine.blactot@gmail.com",
-   "password" : "sandrine123"
+   "pseudo" : "Batiste",
+   "email" : "batiste.blactot1@gmail.com",
+   "password" : "batiste123"
 }
 
