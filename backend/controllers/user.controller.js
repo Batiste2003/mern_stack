@@ -15,4 +15,26 @@ module.exports = {
 				res.status(500).json(error);
 			});
 	},
+
+	// Method getUserById -> GET /api/user/:id
+	getUserById: (req, res) => {
+		console.log(req.params);
+		// Check if the ID is valid
+		if (!ObjectId.isValid(req.params.id)) {
+			return res.status(400).json({ message: 'Invalid ID ' + req.params.id });
+		}
+
+		UserModel.findById(req.params.id)
+			.select('-password')
+			.then((user) => {
+				if (user) {
+					res.status(200).json(user);
+				} else {
+					res.status(404).json({ message: 'User not found' });
+				}
+			})
+			.catch((error) => {
+				res.status(500).json({ message: 'ID not found', error: error });
+			});
+	},
 };
