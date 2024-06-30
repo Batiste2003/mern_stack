@@ -63,6 +63,24 @@ userSchema.pre('save', function (next) {
 		.catch((error) => console.log('Error hashing the password =>', error));
 });
 
+// Login the user if the password is correct
+userSchema.statics.login = function (email, password) {
+	return this.findOne({ email })
+		.then((user) => {
+			if (!user) {
+				return Promise.reject('Invalid email or password');
+			}
+			return bcrypt.compare(password, user.password).then((auth) => {
+				if (auth) {
+					return user;
+				} else {
+					return Promise.reject('Invalid email or password');
+				}
+			});
+		})
+		.catch((error) => console.log('Error logging in the user =>', error));
+};
+
 // Create the User model
 const UserModel = mongoose.model('User', userSchema);
 
