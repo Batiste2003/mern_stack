@@ -1,0 +1,9 @@
+#http
+PATCH http://localhost:5000/api/user/follow/6681d5c1481013c7abafb41b
+Content-Type: application/json
+
+{
+   "idToFollow": "6681d5cd481013c7abafb41d"
+}
+
+
