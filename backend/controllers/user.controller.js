@@ -62,4 +62,24 @@ module.exports = {
 				res.status(500).json({ message: error.message });
 			});
 	},
+
+	// Method deleteUser -> DELETE /api/user/:id
+	deleteUser: (req, res) => {
+		// Check if the ID is valid
+		if (!ObjectId.isValid(req.params.id)) {
+			return res.status(400).json({ message: 'Invalid ID' + req.params.id });
+		}
+
+		UserModel.findOneAndDelete({ _id: req.params.id })
+			.then((user) => {
+				if (user) {
+					res.status(200).json({ message: 'Successfully deleted user' });
+				} else {
+					res.status(404).json({ message: 'User not found' });
+				}
+			})
+			.catch((error) => {
+				res.status(500).json({ message: error.message });
+			});
+	},
 };
