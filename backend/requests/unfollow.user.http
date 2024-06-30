@@ -1,0 +1,9 @@
+#http
+PATCH http://localhost:5000/api/user/unfollow/6681d875410b3245351ddfde
+Content-Type: application/json
+
+{
+   "idToUnfollow": "6681d881410b3245351ddfe0"
+}
+
+

@@ -122,4 +122,44 @@ module.exports = {
 				res.status(500).json({ message: error.message });
 			});
 	},
+
+	// Method unfollow -> PATCH /api/user/unfollow/:id
+	unfollow: (req, res) => {
+		// Check if the ID is valid
+		if (
+			!ObjectId.isValid(req.params.id) ||
+			!ObjectId.isValid(req.body.idToUnfollow)
+		) {
+			return res.status(400).json({ message: 'Invalid ID :' + req.params.id });
+		}
+
+		// Find the user to unfollow
+		const updateUserFollowing = UserModel.findByIdAndUpdate(
+			req.params.id, // The ID of the user who wants to unfollow another user
+			{ $pull: { following: req.body.idToUnfollow } }, // Remove the ID of the user to be unfollowed from the "following" array
+			{ new: true, upsert: true }
+		).select('-password');
+
+		// Find the user to be unfollowed
+		const updateUserFollower = UserModel.findByIdAndUpdate(
+			req.body.idToUnfollow, // The ID of the user to be unfollowed another user
+			{ $pull: { followers: req.params.id } }, // Remove the ID of the user who wants to unfollow another user from the "followers" array
+			{ new: true, upsert: true }
+		).select('-password');
+
+		// Promise.all is used to execute multiple promises at the same time.
+		Promise.all([updateUserFollowing, updateUserFollower])
+			.then(([userFollowing, userFollower]) => {
+				// Destructure the result of both promises
+				if (userFollowing && userFollower) {
+					// Check if both promises are successful
+					res.status(200).json({ userFollowing, userFollower }); // Send a successful response with the updated users
+				} else {
+					res.status(404).json({ message: error });
+				}
+			})
+			.catch((error) => {
+				res.status(500).json({ message: error.message });
+			});
+	},
 };
