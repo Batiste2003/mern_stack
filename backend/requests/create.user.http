@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
    "pseudo" : "Sandrine",
-   "email" : "sandrine.blactot1@gmail.com",
+   "email" : "sandrine.blactot@gmail.com",
    "password" : "sandrine123"
 }
 
