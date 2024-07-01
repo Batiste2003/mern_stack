@@ -26,4 +26,10 @@ module.exports = {
 			})
 			.catch((error) => res.status(400).json({ error: 'Invalid Credentials' }));
 	},
+
+	// Method logout -> POST /api/user/logout
+	logout: (req, res) => {
+		// Invalidate the token by sending a response to the client to remove the token
+		res.status(200).json({ message: 'Logout successful' });
+	},
 };
